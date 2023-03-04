@@ -7,7 +7,7 @@ const AppBarTab = ({ text, path, handlePress }) => {
         <Pressable onPress={handlePress}>
             <Link to={path}>
                 <Text color={"primary"} fontWeight={"bold"}>
-                    {text}
+                    {text}{" "}
                 </Text>
             </Link>
         </Pressable>
