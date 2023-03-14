@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import theme from "../theme";
 import Text from "./Text";
+import { renderThousandsNumber } from "../utils/renderThousandsNumber";
 
 const styles = StyleSheet.create({
     container: {
@@ -45,18 +46,8 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryItem = ({ repository }) => {
-    const renderCount = (number) => {
-        if (number < 1000) {
-            return number;
-        }
-        const dividedNumber = number / 1000;
-        const preciseNumber = dividedNumber.toFixed(2);
-
-        return preciseNumber.slice(0, preciseNumber.length - 1) + "k";
-    };
-
     return (
-        <View style={styles.container}>
+        <View testID="repositoryItem" style={styles.container}>
             <View style={styles.header.container}>
                 <View style={styles.header.logoContainer}>
                     <Image
@@ -66,14 +57,23 @@ const RepositoryItem = ({ repository }) => {
                 </View>
                 <View style={styles.header.infoContainer}>
                     <View>
-                        <Text fontSize={"subheading"} fontWeight="bold">
+                        <Text
+                            testID="repositoryFullName"
+                            fontSize={"subheading"}
+                            fontWeight="bold">
                             Full name: {repository.fullName}
                         </Text>
-                        <Text fontSize={"subheading"} color="textSecondary">
+                        <Text
+                            testID="repositoryDescription"
+                            fontSize={"subheading"}
+                            color="textSecondary">
                             Description: {repository.description}
                         </Text>
                         <View style={styles.header.language}>
-                            <Text color="textLight" fontWeight={"bold"}>
+                            <Text
+                                testID="repositoryLanguage"
+                                color="textLight"
+                                fontWeight={"bold"}>
                                 {repository.language}
                             </Text>
                         </View>
@@ -83,27 +83,31 @@ const RepositoryItem = ({ repository }) => {
 
             <View style={styles.statsList.container}>
                 <View>
-                    <Text fontWeight={"bold"}>
-                        {renderCount(repository.stargazersCount)}
+                    <Text
+                        testID="repositoryStargazersCount"
+                        fontWeight={"bold"}>
+                        {renderThousandsNumber(repository.stargazersCount)}
                     </Text>
                     <Text>Stars</Text>
                 </View>
 
                 <View>
-                    <Text fontWeight={"bold"}>
-                        {renderCount(repository.forksCount)}
+                    <Text testID="repositoryForksCount" fontWeight={"bold"}>
+                        {renderThousandsNumber(repository.forksCount)}
                     </Text>
                     <Text>Forks</Text>
                 </View>
 
                 <View>
-                    <Text fontWeight={"bold"}>
-                        {renderCount(repository.reviewCount)}
+                    <Text testID="repositoryReviewCount" fontWeight={"bold"}>
+                        {renderThousandsNumber(repository.reviewCount)}
                     </Text>
                     <Text>Reviews</Text>
                 </View>
                 <View>
-                    <Text fontWeight={"bold"}>{repository.ratingAverage}</Text>
+                    <Text testID="repositoryRatingAverage" fontWeight={"bold"}>
+                        {repository.ratingAverage}
+                    </Text>
                     <Text>Rating</Text>
                 </View>
             </View>

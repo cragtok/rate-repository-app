@@ -11,9 +11,10 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryList = () => {
-    const { repositories, loading, error } = useRepositories();
-
+export const RepositoryListContainer = ({ repositories, loading, error }) => {
+    const repositoryNodes = repositories
+        ? repositories.edges.map((edge) => edge.node)
+        : [];
     if (loading) {
         return (
             <Text fontSize={"subheading"} fontWeight="bold">
@@ -29,11 +30,6 @@ const RepositoryList = () => {
             </Text>
         );
     }
-
-    const repositoryNodes = repositories
-        ? repositories.edges.map((edge) => edge.node)
-        : [];
-
     return (
         <FlatList
             data={repositoryNodes}
@@ -41,6 +37,18 @@ const RepositoryList = () => {
             renderItem={({ item }) => (
                 <RepositoryItem key={item.id} repository={item} />
             )}
+        />
+    );
+};
+
+const RepositoryList = () => {
+    const { repositories, loading, error } = useRepositories();
+
+    return (
+        <RepositoryListContainer
+            repositories={repositories}
+            loading={loading}
+            error={error}
         />
     );
 };
