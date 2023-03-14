@@ -47,6 +47,17 @@ const SignInForm = ({ onSubmit }) => {
     );
 };
 
+export const SignInContainer = ({ onSubmit, validationSchema }) => {
+    return (
+        <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}>
+            {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+        </Formik>
+    );
+};
+
 const SignIn = () => {
     const [signIn] = useSignIn();
     const navigate = useNavigate();
@@ -65,12 +76,10 @@ const SignIn = () => {
         password: yup.string().required("Password is required"),
     });
     return (
-        <Formik
-            initialValues={initialValues}
+        <SignInContainer
             onSubmit={onSubmit}
-            validationSchema={validationSchema}>
-            {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-        </Formik>
+            validationSchema={validationSchema}
+        />
     );
 };
 
