@@ -5,17 +5,34 @@ import { GET_REPOSITORIES } from "../graphql/queries";
 const useRepositories = () => {
     const [repositories, setRepositories] = useState();
     const [sortMethod, setSortMethod] = useState(1);
+    const [searchKeyword, setSearchKeyword] = useState("");
 
     const generateSortObj = (code) => {
         switch (code) {
             case 1:
-                return { orderBy: "CREATED_AT", orderDirection: "DESC" };
+                return {
+                    searchKeyword,
+                    orderBy: "CREATED_AT",
+                    orderDirection: "DESC",
+                };
             case 2:
-                return { orderBy: "RATING_AVERAGE", orderDirection: "DESC" };
+                return {
+                    searchKeyword,
+                    orderBy: "RATING_AVERAGE",
+                    orderDirection: "DESC",
+                };
             case 3:
-                return { orderBy: "RATING_AVERAGE", orderDirection: "ASC" };
+                return {
+                    searchKeyword,
+                    orderBy: "RATING_AVERAGE",
+                    orderDirection: "ASC",
+                };
             default:
-                return { orderBy: "CREATED_AT", orderDirection: "DESC" };
+                return {
+                    searchKeyword,
+                    orderBy: "CREATED_AT",
+                    orderDirection: "DESC",
+                };
         }
     };
 
@@ -27,7 +44,15 @@ const useRepositories = () => {
         },
     });
 
-    return { repositories, sortMethod, setSortMethod, loading, error };
+    return {
+        repositories,
+        sortMethod,
+        setSortMethod,
+        searchKeyword,
+        setSearchKeyword,
+        loading,
+        error,
+    };
 };
 
 export default useRepositories;
