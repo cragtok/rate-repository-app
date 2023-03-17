@@ -1,6 +1,7 @@
 import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
+import { Picker } from "@react-native-picker/picker";
 import { useNavigate } from "react-router-native";
 import Text from "./Text";
 
@@ -17,6 +18,7 @@ export const RepositoryListContainer = ({
     loading,
     error,
     handlePress,
+    ListHeaderComponent,
 }) => {
     const repositoryNodes = repositories
         ? repositories.edges.map((edge) => edge.node)
@@ -38,6 +40,7 @@ export const RepositoryListContainer = ({
     }
     return (
         <FlatList
+            ListHeaderComponent={ListHeaderComponent}
             data={repositoryNodes}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={({ item }) => (
@@ -53,7 +56,9 @@ export const RepositoryListContainer = ({
 };
 
 const RepositoryList = () => {
-    const { repositories, loading, error } = useRepositories();
+    const { repositories, sortMethod, setSortMethod, loading, error } =
+        useRepositories();
+
     const navigate = useNavigate();
 
     const handlePress = (id) => {
@@ -61,6 +66,17 @@ const RepositoryList = () => {
     };
     return (
         <RepositoryListContainer
+            ListHeaderComponent={() => (
+                <View>
+                    <Picker
+                        selectedValue={sortMethod}
+                        onValueChange={(itemValue) => setSortMethod(itemValue)}>
+                        <Picker.Item label="Latest Repos" value={1} />
+                        <Picker.Item label="Highest Rated" value={2} />
+                        <Picker.Item label="Lowest Rated" value={3} />
+                    </Picker>
+                </View>
+            )}
             repositories={repositories}
             loading={loading}
             error={error}

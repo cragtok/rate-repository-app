@@ -6,7 +6,7 @@ import { renderThousandsNumber } from "../utils/renderThousandsNumber";
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 50,
+        paddingTop: 10,
         flexGrow: 1,
         flexDirection: "column",
     },
