@@ -36,6 +36,11 @@ const AppBar = () => {
                             isLink={true}
                         />
                         <AppBarTab
+                            text="My Reviews"
+                            path="/myreviews"
+                            isLink={true}
+                        />
+                        <AppBarTab
                             text="Sign Out"
                             handlePress={signOut}
                             isLink={false}

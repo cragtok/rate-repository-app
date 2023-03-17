@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
     },
-    userAndDate: {
+    titleAndDate: {
         marginTop: 15,
     },
     text: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, isUserReview }) => {
     const renderDate = (createdAt) => {
         const dateObj = new Date(createdAt);
         const date = dateObj.getDate();
@@ -51,12 +51,14 @@ const ReviewItem = ({ review }) => {
                         {review.rating}
                     </Text>
                 </View>
-                <View style={styles.userAndDate}>
+                <View style={styles.titleAndDate}>
                     <Text
                         fontSize={"large"}
                         fontWeight={"bold"}
                         color="textSecondary">
-                        {review.user.username}
+                        {isUserReview
+                            ? review.repository.fullName
+                            : review.user.username}{" "}
                     </Text>
                     <View>
                         <Text fontSize={"subheading"} color="textSecondary">

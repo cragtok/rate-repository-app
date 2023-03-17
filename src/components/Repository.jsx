@@ -53,7 +53,9 @@ const Repository = () => {
                 </View>
             )}
             data={repository.reviews.edges.map((review) => review.node)}
-            renderItem={({ item }) => <ReviewItem review={item} />}
+            renderItem={({ item }) => (
+                <ReviewItem review={item} isUserReview={false} />
+            )}
             keyExtractor={({ id }) => id}
             ItemSeparatorComponent={ItemSeparator}
         />
