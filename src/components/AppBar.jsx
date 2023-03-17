@@ -29,11 +29,18 @@ const AppBar = () => {
                 contentContainerStyle={styles.tabs.container}>
                 <AppBarTab text="Repositories" path="/" isLink={true} />
                 {data && data.me ? (
-                    <AppBarTab
-                        text="Sign Out"
-                        handlePress={signOut}
-                        isLink={false}
-                    />
+                    <>
+                        <AppBarTab
+                            text="Create A Review"
+                            path="/reviewform"
+                            isLink={true}
+                        />
+                        <AppBarTab
+                            text="Sign Out"
+                            handlePress={signOut}
+                            isLink={false}
+                        />
+                    </>
                 ) : (
                     <AppBarTab text="Sign In" path="/signin" isLink={true} />
                 )}
