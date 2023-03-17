@@ -10,6 +10,15 @@ export const AUTHENTICATE_USER = gql`
     }
 `;
 
+export const CREATE_USER = gql`
+    mutation CreateUser($username: String!, $password: String!) {
+        createUser(user: { username: $username, password: $password }) {
+            id
+            username
+        }
+    }
+`;
+
 export const CREATE_REVIEW = gql`
     mutation CreateReview(
         $ownerName: String!

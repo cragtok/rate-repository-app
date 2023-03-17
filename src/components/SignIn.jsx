@@ -67,7 +67,7 @@ const SignIn = () => {
             await signIn({ username, password });
             navigate("/");
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
