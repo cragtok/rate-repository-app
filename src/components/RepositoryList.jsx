@@ -46,6 +46,8 @@ export class RepositoryListContainer extends React.Component {
                 ListHeaderComponent={this.props.ListHeaderComponent}
                 data={this.getRepositoriesFromNodes()}
                 ItemSeparatorComponent={ItemSeparator}
+                onEndReached={this.props.onEndReach}
+                onEndReachedThreshold={0.3}
                 renderItem={({ item }) => {
                     return (
                         <Pressable
@@ -108,13 +110,15 @@ export const RepositoryListContainer = ({
 const RepositoryList = () => {
     const {
         repositories,
+        fetchMore,
+        loading,
+        error,
         sortMethod,
         setSortMethod,
         searchKeyword,
         setSearchKeyword,
-        loading,
-        error,
-    } = useRepositories();
+    } = useRepositories({ first: 4 });
+
     const debounced = useDebouncedCallback(
         (keyword) => setSearchKeyword(keyword),
         1000
@@ -125,6 +129,11 @@ const RepositoryList = () => {
     const handlePress = (id) => {
         navigate(`/repositories/${id}`);
     };
+
+    const onEndReach = () => {
+        fetchMore();
+    };
+
     return (
         <RepositoryListContainer
             ListHeaderComponent={() => (
@@ -135,6 +144,7 @@ const RepositoryList = () => {
                     setSearchTerm={debounced}
                 />
             )}
+            onEndReach={onEndReach}
             repositories={repositories}
             loading={loading}
             error={error}

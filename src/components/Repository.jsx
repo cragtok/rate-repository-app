@@ -20,7 +20,10 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const Repository = () => {
     const { id } = useParams();
-    const { repository, loading, error } = useRepository(id);
+    const { repository, loading, error, fetchMore } = useRepository({
+        repositoryId: id,
+        first: 3,
+    });
 
     if (error) {
         return (
@@ -37,6 +40,14 @@ const Repository = () => {
         );
     }
 
+    const onEndReach = () => {
+        fetchMore();
+    };
+
+    const reviewNodes = repository.reviews
+        ? repository.reviews.edges.map((edge) => edge.node)
+        : [];
+
     return (
         <FlatList
             ListHeaderComponent={() => (
@@ -52,12 +63,14 @@ const Repository = () => {
                     />
                 </View>
             )}
-            data={repository.reviews.edges.map((review) => review.node)}
+            data={reviewNodes}
             renderItem={({ item }) => (
                 <ReviewItem review={item} isUserReview={false} />
             )}
             keyExtractor={({ id }) => id}
             ItemSeparatorComponent={ItemSeparator}
+            onEndReached={onEndReach}
+            onEndReachedThreshold={0.3}
         />
     );
 };
