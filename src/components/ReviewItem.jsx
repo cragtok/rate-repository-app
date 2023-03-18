@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import Text from "./Text";
 import React from "react";
 import theme from "../theme";
@@ -28,9 +28,15 @@ const styles = StyleSheet.create({
         borderRadius: 55,
         marginTop: 12,
     },
+    userButtonsContainer: {
+        marginTop: 20,
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        marginLeft: 30,
+    },
 });
 
-const ReviewItem = ({ review, isUserReview }) => {
+const ReviewItem = ({ review, isUserReview, deleteReview, openRepo }) => {
     const renderDate = (createdAt) => {
         const dateObj = new Date(createdAt);
         const date = dateObj.getDate();
@@ -40,6 +46,7 @@ const ReviewItem = ({ review, isUserReview }) => {
         const addZero = (number) => (number < 10 ? "0" + number : number);
         return `${addZero(date)}.${addZero(month)}.${year}`;
     };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -67,9 +74,23 @@ const ReviewItem = ({ review, isUserReview }) => {
                     </View>
                 </View>
             </View>
+
             <View style={styles.text}>
                 <Text color="textSecondary">{review.text}</Text>
             </View>
+            {isUserReview && (
+                <View style={styles.userButtonsContainer}>
+                    <Button
+                        onPress={() => openRepo(review.repositoryId)}
+                        title="View repository"
+                    />
+                    <Button
+                        onPress={() => deleteReview(review.id)}
+                        color={theme.colors.danger}
+                        title="Delete Review"
+                    />
+                </View>
+            )}
         </View>
     );
 };
